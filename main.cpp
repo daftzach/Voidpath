@@ -19,6 +19,11 @@ int main(int argc, char* args[])
 	std::vector<SDL_Rect> positionChangeRects;
 	std::vector<SDL_Rect> wallRects;
 
+	float frameTime = 0;
+	float prevTime = 0;
+	float currentTime = 0;
+	float deltaTime = 0;
+
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		SDL_Log("SDL failed to initialize. SDL_Error: %s\n", SDL_GetError());
 		return -1;
@@ -45,7 +50,7 @@ int main(int argc, char* args[])
 	};
 	playerVelocity = {
 		0,
-		1
+		0
 	};
 
 	SDL_Rect newRect = {
@@ -59,12 +64,15 @@ int main(int argc, char* args[])
 	wallRects.push_back(newRect);
 
 	while (!quit) {
+		prevTime = currentTime;
+		currentTime = SDL_GetTicks();
+		deltaTime = (currentTime - prevTime) / 1000.0f;
+
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 				quit = true;
 			}
 
-			// TODO: move
 			if (e.type == SDL_KEYDOWN) {
 				SDL_Rect newRect = {
 						playerPos.x,
@@ -110,9 +118,11 @@ int main(int argc, char* args[])
 		}
 
 		// TODO: move
-		// TODO: fix timestep
-		playerPos.x += playerVelocity.x;
-		playerPos.y += playerVelocity.y;
+		frameTime += deltaTime;
+
+		// TODO: move
+		playerPos.x += (int)(playerVelocity.x * deltaTime * 200);
+		playerPos.y += (int)(playerVelocity.y * deltaTime * 200);
 
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
 		SDL_RenderClear(renderer);
@@ -166,15 +176,17 @@ int main(int argc, char* args[])
 		}
 
 		// TODO: move
-		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		for (SDL_Rect rect : positionChangeRects) {
-			SDL_RenderFillRect(renderer, &rect);
-		}
+		//SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		//for (SDL_Rect rect : positionChangeRects) {
+			//SDL_RenderFillRect(renderer, &rect);
+		//}
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
 		for (SDL_Rect rect : wallRects) {
-			SDL_RenderDrawRect(renderer, &rect);
+			//SDL_RenderDrawRect(renderer, &rect);
+			SDL_RenderFillRect(renderer, &rect);
 		}
 
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		// TODO: move
 		SDL_Rect playerRect = {
 			playerPos.x,
