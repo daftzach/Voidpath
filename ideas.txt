@@ -1,0 +1,5 @@
+- fix movement to a grid? try and get feel at least
+- add death/lose condition (colliding with wall)
+- add basic AI
+- start refactoring (player class, etc.)
+- add main, play, death, pause, and settings screen states

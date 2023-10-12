@@ -9,6 +9,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
 bool checkCollision(SDL_Rect rectA, SDL_Rect rectB);
+void startGameMode();
 
 bool checkCollision(SDL_Rect rectA, SDL_Rect rectB)
 {
@@ -94,8 +95,8 @@ int main(int argc, char* args[])
 	SDL_Rect playerRect = {
 			playerPos.x,
 			playerPos.y,
-			24,
-			24
+			16,
+			16
 	};
 
 	// TODO: move
@@ -118,8 +119,8 @@ int main(int argc, char* args[])
 					SDL_Rect newRect = {
 							playerPos.x,
 							playerPos.y,
-							24,
-							24
+							16,
+							16
 					};
 					switch (e.key.keysym.sym) {
 					// never allow consecutive move directions to be on the same axis.
@@ -168,6 +169,51 @@ int main(int argc, char* args[])
 		playerPos.x += (int)(playerVelocity.x * deltaTime * 200);
 		playerPos.y += (int)(playerVelocity.y * deltaTime * 200);
 
+		// TODO: move and create reset method for player(s)
+		if (playerPos.x < 0 || playerPos.x > 1280 || playerPos.y < 0 || playerPos.y > 720) {
+			positionChangeRects.clear();
+			wallRects.clear();
+
+			playerPos.x = 0;
+			playerPos.y = 0;
+
+			playerRect.x = 0;
+			playerRect.y = 0;
+
+			playerVelocity.x = 0;
+			playerVelocity.y = 1;
+
+			positionChangeRects.push_back(playerRect);
+			wallRects.push_back(playerRect);
+		}
+		else if (wallRects.size() != 0) {
+			// TODO: think of a better way to do this
+			// This break doesn't seem like a good practice. 
+			// Do NOT check current wall for collision (since it's not possible to collide with it)
+			// -- otherwise the side of the player and wall that are SUPPOSED to be touching will always collide
+			// hence, I use size instead of size + 1
+			for (int i = 1; i < wallRects.size(); i++) {
+				if (checkCollision(playerRect, wallRects[i - 1])) {
+					//SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+					positionChangeRects.clear();
+					wallRects.clear();
+
+					playerPos.x = 0;
+					playerPos.y = 0;
+
+					playerRect.x = 0;
+					playerRect.y = 0;
+
+					playerVelocity.x = 0;
+					playerVelocity.y = 1;
+
+					positionChangeRects.push_back(playerRect);
+					wallRects.push_back(playerRect);
+					break;
+				}
+			}
+		}
+
 		// TODO: move
 		/*
 			current wall = wall being built in direction we are currently moving.
@@ -201,11 +247,11 @@ int main(int argc, char* args[])
 			// -1 = up = negative
 			else if (playerVelocity.y == -1) {
 				// since we are moving up, rect origin needs to be on bottom of player rect to prevent false-positive collision
-				// hence, I shift (add) 24 px down to move new rect origin right BELOW player rect
+				// hence, I shift (add) 16 px down to move new rect origin right BELOW player rect
 				// this is because origin is calculated at top left, and since we are oving up, we do not want origin to be the same as player rect origin
 				// otherwise they are right on top of each other
-				newRect.h = (positionChangeRects.back().y + positionChangeRects.back().w) - (playerPos.y + 24);
-				newRect.y = playerPos.y + 24;
+				newRect.h = (positionChangeRects.back().y + positionChangeRects.back().w) - (playerPos.y + 16);
+				newRect.y = playerPos.y + 16;
 			}
 
 			// moving in x dir
@@ -218,11 +264,11 @@ int main(int argc, char* args[])
 			// -1 = left = negative
 			else if (playerVelocity.x == -1) {
 				// since we are moving left, rect origin needs to be on right of player rect to prevent false-positive collision
-				// hence, I shift (add) 24 px right to move new rect origin along right edge of player rect
+				// hence, I shift (add) 16 px right to move new rect origin along right edge of player rect
 				// this is because origin is calculated at top left, and since we are moving left, we do not want origin to be the same as player rect origin
 				// otherwise they are right on top of each other
-				newRect.w = (positionChangeRects.back().x + positionChangeRects.back().h) - (playerPos.x + 24);
-				newRect.x = playerPos.x + 24;
+				newRect.w = (positionChangeRects.back().x + positionChangeRects.back().h) - (playerPos.x + 16);
+				newRect.x = playerPos.x + 16;
 			}
 
 			// add the wall to the back of walls vector -- in other words this is the "current" wall 
@@ -239,25 +285,7 @@ int main(int argc, char* args[])
 			//SDL_RenderFillRect(renderer, &rect);
 		//}
 
-		// TODO: think of a better way to do this
-		// This break doesn't seem like a good practice. 
-		if (wallRects.size() > 1) {
-			// Do NOT check current wall for collision (since it's not possible to collide with it)
-			// -- otherwise the side of the player and wall that are SUPPOSED to be touching will always collide
-			// hence, I use size instead of size + 1
-			for (int i = 1; i < wallRects.size(); i++) {
-				if (checkCollision(playerRect, wallRects[i - 1])) {
-					SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
-					break;
-				}
-				else {
-					SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
-				}
-			}
-		}
-		else {
-			SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
-		}
+		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
 
 		for (SDL_Rect rect : wallRects) {
 			SDL_RenderFillRect(renderer, &rect);
