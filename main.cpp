@@ -1,4 +1,15 @@
-#include <SDL.h>
+#include "Game.h"
+
+int main(int argc, char* args[])
+{
+	Game game;
+	game.init(1280, 720);
+	game.update();
+	game.close();
+}
+
+/*
+* #include <SDL.h>
 #include <stdio.h>
 #include <vector>
 
@@ -9,7 +20,6 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
 bool checkCollision(SDL_Rect rectA, SDL_Rect rectB);
-void startGameMode();
 
 bool checkCollision(SDL_Rect rectA, SDL_Rect rectB)
 {
@@ -82,6 +92,9 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
+
+	SDL_GL_SetSwapInterval(-1);
+
 	// TODO: move
 	playerPos = {
 		0,
@@ -109,6 +122,8 @@ int main(int argc, char* args[])
 		prevTime = currentTime;
 		currentTime = SDL_GetTicks();
 		deltaTime = (currentTime - prevTime) / 1000.0f;
+
+		//printf("%f\n", (float)(1 / deltaTime));
 
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
@@ -215,7 +230,7 @@ int main(int argc, char* args[])
 		}
 
 		// TODO: move
-		/*
+
 			current wall = wall being built in direction we are currently moving.
 			previous wall = wall that was built in last direction we were moving.
 			current wall needs to start at end of previous wall's rectangle and end at player's current position.
@@ -226,7 +241,6 @@ int main(int argc, char* args[])
 
 			SDL_Rect origin is top left
 
-		*/
 		if (positionChangeRects.size() != 0) {
 			// new rectangle will be built from previous position change rect and modified based on current position
 			// TODO: this can be condensed to newRect = back() but I am keeping this for now for clarity
@@ -308,3 +322,4 @@ int main(int argc, char* args[])
 
 	return 0;
 }
+*/

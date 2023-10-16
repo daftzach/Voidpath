@@ -1,5 +1,39 @@
-- fix movement to a grid? try and get feel at least
-- add death/lose condition (colliding with wall)
-- add basic AI
-- start refactoring (player class, etc.)
-- add main, play, death, pause, and settings screen states
+[] fix movement to a grid? try and get feel at least
+[] add death/lose condition (colliding with wall)
+[] display fps and other debug info (player pos, velo, etc.) at top of window
+[in progress] start refactoring (player class, etc.)
+[in progress] add main, play, death, pause, and settings screen states
+
+[] add basic AI
+[] implement local MP -- different key set for second player (arrow keys)
+
+Refactoring
+--------
+- Entity class
+	- Bike class
+	- Lightwall class
+- Screen
+	- Game
+	- Death
+- Game
+
+Refactoring notes
+--------
+- Entities
+	- have a rectangle
+		- x pos, y pos, width, height
+	- have a velocity
+	- can be drawn
+	- can be removed (killed)
+	- can be spawned
+	- can be translated
+	- can be resized
+
+- Bike
+	- have direction
+	- movment
+
+- Game
+	- controls game flow (in particular, screens), main just creates the game
+	- has an update and draw function, but just calls current screen's update/draw
+	
