@@ -33,6 +33,9 @@
     <ClCompile Include="SGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ELightwall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />
@@ -53,5 +56,11 @@
     <ClInclude Include="SGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ELightwall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Gravity-Light.otf" />
   </ItemGroup>
 </Project>

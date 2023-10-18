@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EBike.cpp" />
+    <ClCompile Include="ELightwall.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -144,10 +145,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBike.h" />
+    <ClInclude Include="ELightwall.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SGame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Gravity-Light.otf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

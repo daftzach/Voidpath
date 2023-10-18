@@ -28,12 +28,20 @@ EBike::EBike(int startX, int startY, int w, int h, int moveSpeed)
 	: Entity(startX, startY, w, h)
 	, moveSpeed(moveSpeed)
 {
-	rect = new SDL_Rect{
+	rect = SDL_Rect {
 		startX,
 		startY,
 		w,
 		h
 	};
+
+	currState = STATE_STILL;
+}
+
+EBike::EBike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color)
+	:EBike(startX, startY, w, h, moveSpeed)
+{
+	this->color = color;
 }
 
 bool EBike::changeDirection(Direction newDirection)
@@ -45,17 +53,40 @@ bool EBike::changeDirection(Direction newDirection)
 		currDirection.yDir = newDirection.yDir;
 		currDirection.xDir = 0;
 
+		switch (newDirection.yDir) {
+		case -1:
+			currState = STATE_UP;
+			break;
+		case 1:
+			currState = STATE_DOWN;
+			break;
+		}
+
 		return true;
 
 	} else if (currDirection.xDir == 0 && newDirection.xDir != 0) {
 		currDirection.xDir = newDirection.xDir;
 		currDirection.yDir = 0;
 
+		switch (newDirection.xDir) {
+		case -1:
+			currState = STATE_LEFT;
+			break;
+		case 1:
+			currState = STATE_RIGHT;
+			break;
+		}
+
 		return true;
 	}
 
 	// TODO: return error, log
 	return false;
+}
+
+MoveState EBike::getCurrentState()
+{
+	return currState;
 }
 
 void EBike::update(float deltaTime)
@@ -68,7 +99,5 @@ void EBike::update(float deltaTime)
 
 void EBike::draw(SDL_Renderer* renderer)
 {
-	// TODO: add setcolor method
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_RenderFillRect(renderer, rect);
+	Entity::draw(renderer);
 }
