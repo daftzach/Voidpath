@@ -1,17 +1,17 @@
 #pragma once
-#include "Screen.h"
-#include "ELightwall.h"
+#include "GameState.h"
+#include "Lightwall.h"
 // TODO: implement own data structure?
 #include <vector>
 
-class EBike;
+class Bike;
 
 struct SDL_Point;
 struct SDL_Rect;
 struct Direction;
 
-class SGame
-	: public Screen
+class PlayState
+	: public GameState
 {
 public:
 	void start() override;
@@ -25,8 +25,8 @@ private:
 
 	void processDirectionChange(Direction newDirection);
 
-	EBike* player;
+	Bike* player;
 	std::vector<SDL_Point> dirChangeCoords = {};
-	std::vector<ELightwall> lightwalls = {};
+	std::vector<Lightwall> lightwalls = {};
 };
 

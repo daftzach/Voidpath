@@ -1,11 +1,13 @@
-[] fix movement to a grid? try and get feel at least
-[] add death/lose condition (colliding with wall)
+[] move lightwall place/resize logic into bike class
+[] define player and bike logic -- controllable by player and AI
 [] display fps and other debug info (player pos, velo, etc.) at top of window
-[in progress] start refactoring (player class, etc.)
 [in progress] add main, play, death, pause, and settings screen states
-
-[] add basic AI
 [] implement local MP -- different key set for second player (arrow keys)
+[] add powerups (increased/decreased movespeed, invincibility?)
+[] add basic AI
+
+[nope, want to be able to move freely] fix movement to a grid? try and get feel at least
+[done, refactored everything from main.cpp] start refactoring (player class, etc.)
 
 Refactoring
 --------

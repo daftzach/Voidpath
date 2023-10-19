@@ -1,4 +1,4 @@
-#include "EBike.h"
+#include "Bike.h"
 #include <SDL.h>
 
 void clamp(Direction& direction, int minX, int maxX, int minY, int maxY)
@@ -24,7 +24,7 @@ void clamp(Direction& direction, int minX, int maxX, int minY, int maxY)
 	}
 }
 
-EBike::EBike(int startX, int startY, int w, int h, int moveSpeed)
+Bike::Bike(int startX, int startY, int w, int h, int moveSpeed)
 	: Entity(startX, startY, w, h)
 	, moveSpeed(moveSpeed)
 {
@@ -38,13 +38,13 @@ EBike::EBike(int startX, int startY, int w, int h, int moveSpeed)
 	currState = STATE_STILL;
 }
 
-EBike::EBike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color)
-	:EBike(startX, startY, w, h, moveSpeed)
+Bike::Bike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color)
+	:Bike(startX, startY, w, h, moveSpeed)
 {
 	this->color = color;
 }
 
-bool EBike::changeDirection(Direction newDirection)
+bool Bike::changeDirection(Direction newDirection)
 {
 	//Clamp x and y direction values to between -1 and 1
 	clamp(newDirection, -1, 1, -1, 1);
@@ -84,12 +84,12 @@ bool EBike::changeDirection(Direction newDirection)
 	return false;
 }
 
-MoveState EBike::getCurrentState()
+MoveState Bike::getCurrentState()
 {
 	return currState;
 }
 
-void EBike::update(float deltaTime)
+void Bike::update(float deltaTime)
 {
 	int newX = posX + (int)(currDirection.xDir * deltaTime * moveSpeed);
 	int newY = posY + (int)(currDirection.yDir * deltaTime * moveSpeed);
@@ -97,7 +97,7 @@ void EBike::update(float deltaTime)
 	translate(newX, newY);
 }
 
-void EBike::draw(SDL_Renderer* renderer)
+void Bike::draw(SDL_Renderer* renderer)
 {
 	Entity::draw(renderer);
 }

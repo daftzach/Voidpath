@@ -17,13 +17,13 @@ enum MoveState
 	STATE_RIGHT
 };
 
-class EBike :
+class Bike :
     public Entity
 {
 public:
-	EBike() = default;
-	EBike(int startX, int startY, int w, int h, int moveSpeed);
-	EBike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color);
+	Bike() = default;
+	Bike(int startX, int startY, int w, int h, int moveSpeed);
+	Bike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color);
 
 	bool changeDirection(Direction newDirection);
 	MoveState getCurrentState();

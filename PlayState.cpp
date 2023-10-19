@@ -1,5 +1,5 @@
-#include "SGame.h"
-#include "EBike.h"
+#include "PlayState.h"
+#include "Bike.h"
 #include <SDL.h> 
 
 // TODO: There's a better place to put these but keep them here for now
@@ -11,13 +11,13 @@ const Direction RIGHT = { 1, 0 };
 const SDL_Color PLAYER_HEAD_COLOR = SDL_Color { 255, 255, 255, 255 };
 const SDL_Color PLAYER_WALL_COLOR = SDL_Color{ 0, 0, 255, 255 };
 
-void SGame::start()
+void PlayState::start()
 {
 	// TODO: don't want to set size or start pos or move speed like this, of course
-	player = new EBike(0, 0, TILE_SIZE, TILE_SIZE, 200, PLAYER_HEAD_COLOR);
+	player = new Bike(0, 0, TILE_SIZE, TILE_SIZE, 200, PLAYER_HEAD_COLOR);
 }
 
-void SGame::processEvents(SDL_Event& event)
+void PlayState::processEvents(SDL_Event& event)
 {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -37,12 +37,11 @@ void SGame::processEvents(SDL_Event& event)
 	}
 }
 
-void SGame::update(float deltaTime)
+void PlayState::update(float deltaTime)
 {
 	player->update(deltaTime);
 
-	// TODO: there is a better way to do this.
-	// why have state AND direction? why not chose one or the other?
+	// TODO: MOVE to player and bike classes since bikes have to have lightwalls
 	switch (player->getCurrentState()) {
 	case STATE_UP:
 		lightwalls.back().resizeRect(NULL, (dirChangeCoords.back().y + TILE_SIZE) - player->getPositionCoords().y);
@@ -61,22 +60,23 @@ void SGame::update(float deltaTime)
 	}
 }
 
-void SGame::draw(SDL_Renderer* renderer)
+void PlayState::draw(SDL_Renderer* renderer)
 {
-	for (ELightwall lightwall : lightwalls) {
+	for (Lightwall lightwall : lightwalls) {
 		lightwall.draw(renderer);
 	}
 
 	player->draw(renderer);
 }
 
-void SGame::dispose()
+void PlayState::dispose()
 {
 	dirChangeCoords.clear();
 	lightwalls.clear();
 }
 
-void SGame::processDirectionChange(Direction newDirection)
+// TODO: MOVE to player and bike classes
+void PlayState::processDirectionChange(Direction newDirection)
 {
 	SDL_Rect newLightwallRect = {};
 
@@ -89,6 +89,6 @@ void SGame::processDirectionChange(Direction newDirection)
 		newLightwallRect.x = dirChangeCoords.back().x;
 		newLightwallRect.y = dirChangeCoords.back().y;
 
-		lightwalls.push_back(ELightwall(newLightwallRect, PLAYER_WALL_COLOR));
+		lightwalls.push_back(Lightwall(newLightwallRect, PLAYER_WALL_COLOR));
 	}
 }

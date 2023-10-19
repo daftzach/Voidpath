@@ -2,7 +2,7 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
-class Screen;
+class GameState;
 
 class Game
 {
@@ -21,6 +21,6 @@ private:
 	SDL_Window* sdlWindow = {};
 	SDL_Renderer* sdlRenderer = {};
 
-	Screen* currScreen;
+	GameState* currState;
 };
 

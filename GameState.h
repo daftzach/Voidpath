@@ -3,7 +3,7 @@
 struct SDL_Renderer;
 union SDL_Event;
 
-class Screen
+class GameState
 {
 public:
 	virtual void start() = 0;

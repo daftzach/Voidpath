@@ -15,25 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EBike.cpp">
+    <ClCompile Include="Bike.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.cpp">
+    <ClCompile Include="GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SGame.cpp">
+    <ClCompile Include="PlayState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ELightwall.cpp">
+    <ClCompile Include="Lightwall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,19 +44,19 @@
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EBike.h">
+    <ClInclude Include="Bike.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Screen.h">
+    <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SGame.h">
+    <ClInclude Include="PlayState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ELightwall.h">
+    <ClInclude Include="Lightwall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

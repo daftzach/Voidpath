@@ -1,8 +1,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include "Game.h"
-#include "Screen.h"
-#include "SGame.h"
+#include "GameState.h"
+#include "PlayState.h"
 
 bool Game::init(int windowWidth, int windowHeight)
 {
@@ -24,8 +24,8 @@ bool Game::init(int windowWidth, int windowHeight)
 	}
 
 	// TODO: state machine/stack
-	currScreen = new SGame();
-	currScreen->start();
+	currState = new PlayState();
+	currState->start();
 
 	return true;
 }
@@ -35,7 +35,7 @@ void Game::close()
 	SDL_DestroyRenderer(sdlRenderer);
 	SDL_DestroyWindow(sdlWindow);
 
-	currScreen->dispose();
+	currState->dispose();
 
 	SDL_Quit();
 }
@@ -56,10 +56,12 @@ void Game::update()
 			if (sdlEvent.type == SDL_QUIT) {
 				shouldQuit = true;
 			}
-			currScreen->processEvents(sdlEvent);
+
+			// TODO: switch to keystates instead of SDL events
+			currState->processEvents(sdlEvent);
 		}
 
-		currScreen->update(deltaTime);
+		currState->update(deltaTime);
 
 		draw();
 	}
@@ -70,7 +72,7 @@ void Game::draw()
 	SDL_SetRenderDrawColor(sdlRenderer, 0x00, 0x00, 0x00, 0xFF);
 	SDL_RenderClear(sdlRenderer);
 
-	currScreen->draw(sdlRenderer);
+	currState->draw(sdlRenderer);
 
 	SDL_RenderPresent(sdlRenderer);
 }
