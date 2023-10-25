@@ -34,9 +34,6 @@ void Game::close()
 {
 	SDL_DestroyRenderer(sdlRenderer);
 	SDL_DestroyWindow(sdlWindow);
-
-	currState->dispose();
-
 	SDL_Quit();
 }
 
@@ -56,9 +53,6 @@ void Game::update()
 			if (sdlEvent.type == SDL_QUIT) {
 				shouldQuit = true;
 			}
-
-			// TODO: switch to keystates instead of SDL events
-			currState->processEvents(sdlEvent);
 		}
 
 		currState->update(deltaTime);

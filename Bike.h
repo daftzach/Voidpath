@@ -1,39 +1,38 @@
 #pragma once
 #include "Entity.h"
-
-struct Direction
-{
-	int xDir;
-	int yDir;
-};
-void clamp(Direction& direction, int minX, int maxX, int minY, int maxY);
-
-enum MoveState
-{
-	STATE_STILL,
-	STATE_UP,
-	STATE_DOWN,
-	STATE_LEFT,
-	STATE_RIGHT
-};
+#include "Lightwall.h"
+#include <vector>
 
 class Bike :
     public Entity
 {
 public:
+	struct Velocity
+	{
+		int x, y;
+	};
+
 	Bike() = default;
 	Bike(int startX, int startY, int w, int h, int moveSpeed);
 	Bike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color);
 
-	bool changeDirection(Direction newDirection);
-	MoveState getCurrentState();
+	bool changeVelocity(Velocity newVelocity);
 
 	void update(float deltaTime) override;
 	void draw(SDL_Renderer* renderer) override;
 
 private: 
-	Direction currDirection = { 0, 0 };
-	MoveState currState = STATE_STILL;
-	int moveSpeed = 0;
+	int moveSpeed;
+	Velocity velocity;
+	Lightwall currentTrailObj;
+
+	std::vector<Lightwall> trailSegments;
+	std::vector<Position> directionChangePositions;
+
+	const Velocity ZERO = Velocity{ 0, 0 };
+	const Velocity UP = Velocity{ 0, -1 };
+	const Velocity DOWN = Velocity{ 0, 1 };
+	const Velocity LEFT = Velocity{ -1, 0 };
+	const Velocity RIGHT = Velocity{ 1, 0 };
 };
 
