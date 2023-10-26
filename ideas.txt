@@ -1,13 +1,16 @@
-[] set color of bike and trail, allow to be different
-[] check for collisions in level
+[] fix movement to move TILE_SIZE per frame? to make self-collisions feel better, too easy to collide to self when just moving if done too fast
+[] add death/kill function/event
+[] show death screen, allow restart
+
 [] define player and bike logic -- controllable by player and AI
 [] display fps and other debug info (player pos, velo, etc.) at top of window
 [in progress] add main, play, death, pause, and settings screen states
 [] implement local MP -- different key set for second player (arrow keys)
 [] add powerups (increased/decreased movespeed, invincibility?), random like MK item blocks?
 [] add basic AI
-[?] fix movement to a grid? try and get feel at least
 
+[done] check for collisions in level (one player)
+[done] set color of bike and trail, allow to be different
 [done] move lightwall place/resize logic into bike class
 [done, refactored everything from main.cpp] start refactoring (player class, etc.)
 

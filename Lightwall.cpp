@@ -22,3 +22,9 @@ void Lightwall::draw(SDL_Renderer* renderer)
 {
 	Entity::draw(renderer);
 }
+
+void Lightwall::onCollision(Entity* collidedWith)
+{
+	// TODO: does wall need to do anything on collision? probably not.
+	SDL_Log("WALL: Collision detected!");
+}

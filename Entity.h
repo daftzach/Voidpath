@@ -16,19 +16,21 @@ public:
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(SDL_Renderer* renderer) = 0;
 
-	Position getPosition();
-
-	// Commenting since this shouldn't be needed, until maybe for collisions?
-	//SDL_Rect* getRect();
+	virtual void onCollision(Entity* collidedWith) = 0;
 
 	void translate(int newX, int newY);
 	void resizeRect(int newW, int newH);
+	void changeColor(SDL_Color newColor);
+
+	Position getPosition();
+	SDL_Rect* getRect();
+
 
 protected:
 	SDL_Rect rect = { 0, 0, 0, 0 };
 	SDL_Color color = { 255, 255, 255, 255 };
 
 private:
-	Position position;
+	Position position = { 0, 0 };
 };
 

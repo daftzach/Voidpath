@@ -1,8 +1,6 @@
 #pragma once
 #include "Entity.h"
 
-class Bike;
-
 class Lightwall :
     public Entity
 {
@@ -13,5 +11,7 @@ public:
 
     void update(float deltaTime) override;
     void draw(SDL_Renderer* renderer) override;
+
+    void onCollision(Entity* collidedWith) override;
 };
 

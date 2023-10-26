@@ -3,11 +3,13 @@
 #include "Lightwall.h"
 #include <vector>
 
+class PlayState;
+
 class Bike :
     public Entity
 {
 public:
-	struct Velocity
+	struct Direction
 	{
 		int x, y;
 	};
@@ -15,24 +17,32 @@ public:
 	Bike() = default;
 	Bike(int startX, int startY, int w, int h, int moveSpeed);
 	Bike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color);
+	Bike(int startX, int startY, int w, int h, int moveSpeed, SDL_Color color, PlayState* world);
 
-	bool changeVelocity(Velocity newVelocity);
+	bool changeDirection(Direction newVelocity);
+	void reset();
 
 	void update(float deltaTime) override;
 	void draw(SDL_Renderer* renderer) override;
 
-private: 
-	int moveSpeed;
-	Velocity velocity;
-	Lightwall currentTrailObj;
+	void onCollision(Entity* collidedWith) override;
 
-	std::vector<Lightwall> trailSegments;
+
+private: 
+	Position startPosition;
+	int moveSpeed;
+	Direction direction;
+	// The current trail being built by player. NOT added to lightwall vector.
+	// TODO: create a bounding box so other players can collide with currentTrailObj.
+	Lightwall currentTrailObj;
+	PlayState* world;
+
 	std::vector<Position> directionChangePositions;
 
-	const Velocity ZERO = Velocity{ 0, 0 };
-	const Velocity UP = Velocity{ 0, -1 };
-	const Velocity DOWN = Velocity{ 0, 1 };
-	const Velocity LEFT = Velocity{ -1, 0 };
-	const Velocity RIGHT = Velocity{ 1, 0 };
+	const Direction ZERO = Direction{ 0, 0 };
+	const Direction UP = Direction{ 0, -1 };
+	const Direction DOWN = Direction{ 0, 1 };
+	const Direction LEFT = Direction{ -1, 0 };
+	const Direction RIGHT = Direction{ 1, 0 };
 };
 

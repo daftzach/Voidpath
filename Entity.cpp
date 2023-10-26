@@ -16,7 +16,7 @@ Entity::Entity(int x, int y, int w, int h)
 Entity::Entity(int x, int y, int w, int h, SDL_Color color)
 	: Entity(x, y, w, h)
 {
-	this->color = color;
+	changeColor(color);
 }
 
 Entity::Position Entity::getPosition()
@@ -24,12 +24,10 @@ Entity::Position Entity::getPosition()
 	return position;
 }
 
-/*
 SDL_Rect* Entity::getRect()
 {
 	return &rect;
 }
-*/
 
 void Entity::translate(int newX, int newY)
 {
@@ -56,10 +54,16 @@ void Entity::resizeRect(int newW, int newH)
 	}
 }
 
+void Entity::changeColor(SDL_Color newColor)
+{
+	this->color = newColor;
+}
+
 
 void Entity::draw(SDL_Renderer* renderer)
 {
 	// TODO: add setcolor method
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);
+	//SDL_RenderDrawRect(renderer, &rect);
 }
