@@ -16,7 +16,6 @@ private:
 	void draw();
 
 	bool shouldQuit = false;
-	float deltaTime = 0.0f;
 
 	SDL_Window* sdlWindow = {};
 	SDL_Renderer* sdlRenderer = {};

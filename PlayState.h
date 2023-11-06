@@ -13,7 +13,7 @@ class PlayState
 	: public GameState
 {
 public:
-	const int TILE_SIZE = 16;
+	const float TILE_SIZE = 16.0f;
 
 	void start() override;
 	void update(float deltaTime) override;
@@ -27,7 +27,6 @@ private:
 	Bike* player;
 	std::vector<Lightwall> trailSegments;
 
-	bool isColliding(Entity* entity1, Lightwall* entity2);
-	void handleCollision(Entity* entity1, Entity* entity2);
+	bool checkCollision(Entity* entity1, Lightwall* entity2);
 };
 

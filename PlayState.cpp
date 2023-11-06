@@ -9,7 +9,7 @@ void PlayState::start()
 	trailSegments = {};
 
 	// TODO: don't want to set size or start pos or move speed like this, of course
-	player = new Bike(0, 0, TILE_SIZE, TILE_SIZE, 200, PLAYER_HEAD_COLOR, this);
+	player = new Bike(0.0f, 0.0f, TILE_SIZE, TILE_SIZE, 0.16f, PLAYER_HEAD_COLOR, this);
 }
 
 void PlayState::update(float deltaTime)
@@ -20,8 +20,7 @@ void PlayState::update(float deltaTime)
 
 	if (trailSegments.size() != 0) {
 		for (int i = 0; i < trailSegments.size() - 1; i++) {
-			if (isColliding(player, &trailSegments[i])) {
-				handleCollision(player, &trailSegments[i]);
+			if (checkCollision(player, &trailSegments[i])) {
 			}
 		}
 	}
@@ -42,13 +41,13 @@ void PlayState::addLightwall(Lightwall lightwall)
 	trailSegments.emplace_back(lightwall);
 }
 
-bool PlayState::isColliding(Entity* entity1, Lightwall* entity2)
+bool PlayState::checkCollision(Entity* entity1, Lightwall* entity2)
 {
 	// Sides of bounding boxes
-	int leftRectA, leftRectB;
-	int rightRectA, rightRectB;
-	int topRectA, topRectB;
-	int bottomRectA, bottomRectB;
+	float leftRectA, leftRectB;
+	float rightRectA, rightRectB;
+	float topRectA, topRectB;
+	float bottomRectA, bottomRectB;
 
 	// RECT A
 	leftRectA = entity1->getRect()->x;
@@ -79,10 +78,4 @@ bool PlayState::isColliding(Entity* entity1, Lightwall* entity2)
 	}
 
 	return true;
-}
-
-void PlayState::handleCollision(Entity* entity1, Entity* entity2)
-{
-	entity1->onCollision(entity2);
-	entity2->onCollision(entity1);
 }

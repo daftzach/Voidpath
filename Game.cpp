@@ -41,13 +41,14 @@ void Game::update()
 {
 	SDL_Event sdlEvent;
 
-	float currentTime = 0;
-	float prevTime = 0;
+	Uint64 currentTime = SDL_GetPerformanceCounter();
+	Uint64 prevTime = 0;
+	float deltaTime = 0;
 
 	while (!shouldQuit) {
 		prevTime = currentTime;
-		currentTime = SDL_GetTicks();
-		deltaTime = (currentTime - prevTime) / 1000.0f;
+		currentTime = SDL_GetPerformanceCounter();
+		deltaTime = ((currentTime - prevTime) * 1000 / (float)SDL_GetPerformanceFrequency());
 
 		while (SDL_PollEvent(&sdlEvent) != 0) {
 			if (sdlEvent.type == SDL_QUIT) {

@@ -1,11 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity(int x, int y, int w, int h)
+Entity::Entity(float x, float y, float w, float h)
 {
 	position.x = x;
 	position.y = y;
 
-	this->rect = SDL_Rect{
+	this->rect = SDL_FRect {
 		position.x,
 		position.y,
 		w,
@@ -13,7 +13,7 @@ Entity::Entity(int x, int y, int w, int h)
 	};
 }
 
-Entity::Entity(int x, int y, int w, int h, SDL_Color color)
+Entity::Entity(float x, float y, float w, float h, SDL_Color color)
 	: Entity(x, y, w, h)
 {
 	changeColor(color);
@@ -24,12 +24,12 @@ Entity::Position Entity::getPosition()
 	return position;
 }
 
-SDL_Rect* Entity::getRect()
+SDL_FRect* Entity::getRect()
 {
 	return &rect;
 }
 
-void Entity::translate(int newX, int newY)
+void Entity::translate(float newX, float newY)
 {
 	if (newX != NULL) {
 		position.x = newX;
@@ -43,7 +43,7 @@ void Entity::translate(int newX, int newY)
 }
 
 // Allowed to set to NULL in case w or h should not change
-void Entity::resizeRect(int newW, int newH)
+void Entity::resizeRect(float newW, float newH)
 {
 	if (newW != NULL) {
 		rect.w = newW;
@@ -59,11 +59,10 @@ void Entity::changeColor(SDL_Color newColor)
 	this->color = newColor;
 }
 
-
 void Entity::draw(SDL_Renderer* renderer)
 {
 	// TODO: add setcolor method
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(renderer, &rect);
+	SDL_RenderFillRectF(renderer, &rect);
 	//SDL_RenderDrawRect(renderer, &rect);
 }
